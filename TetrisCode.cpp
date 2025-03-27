@@ -74,19 +74,20 @@ vector<vector<vector<int>>> tetrominoes = {
 
 class Tetromino {
 public:
-    int x, y;
-    int type;
-    vector<vector<int>> shape;
+    int x, y;                      // Position of the tetromino
+    int type;                      // Type of tetromino (0 to 6)
+    vector<vector<int>> shape;     // 2D matrix representing the tetromino shape
     
-    Tetromino() {
+    Tetromino() {                  // Constructor
         random_device rd;
-        mt19937 gen(rd());
-        uniform_int_distribution<> dist(0, 6);
-        
-        type = dist(gen);
-        shape = tetrominoes[type];
-        x = WIDTH / 2 - shape[0].size() / 2;
-        y = 0;
+        mt19937 gen(rd());             
+        uniform_int_distribution<> dist(0, 6);  
+
+        type = dist(gen);          // Randomly select a tetromino type (0 to 6)
+        shape = tetrominoes[type]; // Assign the shape from the predefined list
+
+        x = WIDTH / 2 - shape[0].size() / 2; // Center the tetromino horizontally
+        y = 0;                    // Start at the top of the board
     }
     
     void rotate() {
@@ -100,16 +101,16 @@ public:
     }
 };
 
-vector<vector<int>> grid(HEIGHT, vector<int>(WIDTH, 0));
+vector<vector<int>> grid(HEIGHT, vector<int>(WIDTH, 0)); // repeats this row HEIGHT times, forming a 2D grid.
 Tetromino currentPiece;
 Tetromino nextPiece;
 
 // Initialize console settings
 void initConsole() {
-    CONSOLE_CURSOR_INFO cursorInfo;
-    cursorInfo.dwSize = 1;
-    cursorInfo.bVisible = FALSE;
-    SetConsoleCursorInfo(hConsole, &cursorInfo);
+    CONSOLE_CURSOR_INFO cursorInfo;  // Structure to hold cursor information
+    cursorInfo.dwSize = 1;           // Set cursor size (not relevant here)
+    cursorInfo.bVisible = FALSE;     // Hide the cursor (FALSE means invisible)
+    SetConsoleCursorInfo(hConsole, &cursorInfo); // Apply settings to the console
 }
 
 // Function to draw the game board with double buffering
